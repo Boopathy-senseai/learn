@@ -20,8 +20,8 @@ jobs:
       - name: Configure AWS Credentials
         uses: aws-actions/configure-aws-credentials@v1
         with:
-          aws-access-key-id: ${{ secrets.LIVE_AWS_ACCESS_KEY }}
-          aws-secret-access-key: ${{ secrets.LIVE_AWS_SECRET_ACCESS_KEY }}
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-region: us-east-1
 
       - name: Prepare variables for SAM
@@ -39,20 +39,6 @@ jobs:
         run: aws s3api delete-bucket --bucket gxp-feature${SUB_ENV} --region us-east-1
 
 
-      # - name: Empty test results s3 bucket
-      #   run: aws s3 rm s3://testresults-feat${SUB_ENV} --recursive
-
-      
-      # - name: Remove swagger bucket
-      #   run: aws s3 rm s3://diana-iris-swagger-feat/${SUB_ENV}
-
-      # - name: Invoke Delete S3 BranchBuckets Lambda
-      #   uses: gagoar/invoke-aws-lambda@master
-      #   with:
-      #     AWS_ACCESS_KEY_ID: ${{ secrets.LIVE_AWS_ACCESS_KEY }}
-      #     AWS_SECRET_ACCESS_KEY: ${{ secrets.LIVE_AWS_SECRET_ACCESS_KEY }}
-      #     # FunctionName: Utils-Delete-S3-Buckets
-      #     Payload: '{ "branch_name": "${{github.head_ref}}", "branch_name2": "${{github.ref_name}}"}'
       
       - name: SAM Delete
         run: |
